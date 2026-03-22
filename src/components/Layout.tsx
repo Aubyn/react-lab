@@ -3,23 +3,24 @@
  * 使用 DaisyUI 的 navbar 和 footer 组件
  * 核心数据：
  * - navItems: 导航项列表
- * - Link: React Router 的链接组件（使用 to 属性）
+ * - Link: TanStack Router 的链接组件
  * - children: React 子元素
  */
-import type { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import type { ReactNode } from 'react'
+import { Link, useRouterState } from '@tanstack/react-router'
 
 const navItems = [
   { path: '/', label: '首页' },
   { path: '/about', label: '关于' },
-];
+]
 
 interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const location = useLocation();
+  const routerState = useRouterState()
+  const currentPath = routerState.location.pathname
 
   return (
     <div className="min-h-screen flex flex-col bg-base-100">
@@ -38,7 +39,7 @@ export default function Layout({ children }: LayoutProps) {
                   <Link
                     to={item.path}
                     className={`${
-                      location.pathname === item.path
+                      currentPath === item.path
                         ? 'bg-primary text-primary-content'
                         : 'hover:bg-base-300'
                     }`}
@@ -62,10 +63,10 @@ export default function Layout({ children }: LayoutProps) {
         <div>
           <p className="text-sm">
             © {new Date().getFullYear()} React Lab. Built with{' '}
-            <span className="text-primary">React + Vite + TailwindCSS</span>
+            <span className="text-primary">React + Vite + TailwindCSS + TanStack Router</span>
           </p>
         </div>
       </footer>
     </div>
-  );
+  )
 }

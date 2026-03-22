@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 /**
  * 实现思路：首页组件，展示 hello-world
  * 使用 DaisyUI 的 hero 组件创建醒目的展示效果
@@ -5,7 +7,7 @@
  * - title: "Hello World" - 页面主标题
  * - subtitle: 副标题说明
  */
-export default function Home() {
+function Home() {
   return (
     <div className="hero min-h-[80vh] bg-base-200">
       <div className="hero-content text-center">
@@ -14,7 +16,7 @@ export default function Home() {
             Hello World
           </h1>
           <p className="py-6 text-lg text-base-content/70">
-            欢迎使用 React + Vite + TailwindCSS + DaisyUI 构建的现代化前端应用
+            欢迎使用 React + Vite + TailwindCSS + DaisyUI + TanStack Router 构建的现代化前端应用
           </p>
           <div className="flex gap-4 justify-center">
             <button className="btn btn-primary">开始使用</button>
@@ -25,9 +27,14 @@ export default function Home() {
             <span className="badge badge-outline">Vite 6</span>
             <span className="badge badge-outline">TailwindCSS 4</span>
             <span className="badge badge-outline">DaisyUI 5</span>
+            <span className="badge badge-outline">TanStack Router</span>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+export const Route = createFileRoute('/')({
+  component: Home,
+})

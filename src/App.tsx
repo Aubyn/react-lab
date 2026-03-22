@@ -1,37 +1,27 @@
 /**
- * 实现思路：应用主组件，配置 React Router 路由
- * 使用 BrowserRouter 并设置 basename 适配子路径部署
- * 使用 lazy + Suspense 实现代码分割，优化性能
+ * 实现思路：应用主组件，配置 TanStack Router
+ * 使用 RouterProvider 提供路由功能
  * 核心数据：
- * - basename: '/react-lab' - 子路径配置
- * - lazy: 动态导入实现代码分割
- * - Suspense: 配合 Loading 组件显示加载状态
+ * - router: TanStack Router 实例
  */
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import Loading from './components/Loading';
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
 
-// 懒加载页面组件，实现代码分割
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
+// 创建路由器实例，配置 basepath 适配子路径部署
+const router = createRouter({
+  routeTree,
+  basepath: '/react-lab',
+})
 
-// 子路径配置，与 vite.config.ts 中的 base 保持一致
-const BASENAME = '/react-lab';
-
-function App() {
-  return (
-    <BrowserRouter basename={BASENAME}>
-      <Layout>
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </Suspense>
-      </Layout>
-    </BrowserRouter>
-  );
+// 注册路由器类型声明
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
 }
 
-export default App;
+function App() {
+  return <RouterProvider router={router} />
+}
+
+export default App
