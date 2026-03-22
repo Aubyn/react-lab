@@ -1,0 +1,21 @@
+/* TailwindCSS v4 + DaisyUI */
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* 自定义主题配置 */
+@theme {
+  --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+}
+
+/* 基础样式 */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
